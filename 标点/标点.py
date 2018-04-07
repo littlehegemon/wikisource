@@ -2,8 +2,8 @@
 
 import difflib
 
-BIAODIAN_beginning = list("([{<❨❴⟨【〔〘《〈“‘「『")
-BIAODIAN_ending = list("’')]}>❩❵⟩】〕〙：，、‒–—―~─….！。》〉﹏＿～‐?？”")
+BIAODIAN_beginning = "([{<❨❴⟨【〔〘《〈“‘「『"
+BIAODIAN_ending = "’')]}>❩❵⟩】〕〙：，、‒–—―~─….！。》〉﹏＿～‐?？”』」"
 BIAODIAN = BIAODIAN_beginning + BIAODIAN_ending
 
 # to be added
@@ -77,7 +77,7 @@ def add_biaodian(text1, text2, biaodian_positions_1, biaodian_positions_2):
 def find_biaodian_postisions(text1, text2):
     # 输入：待标点文字，已标点文字
     # 输出：待标点文字标点位置列表，已标点文字标点位置列表
-    Matcher = difflib.SequenceMatcher(lambda x: x in BIAODIAN + ["\n"], merge_similar_chars(text1),
+    Matcher = difflib.SequenceMatcher(lambda x: x in BIAODIAN + " \t\n", merge_similar_chars(text1),
                                       merge_similar_chars(text2), )
     biaodian_positions_1 = []
     biaodian_positions_2 = []
@@ -90,7 +90,6 @@ def find_biaodian_postisions(text1, text2):
         if behaviour == "insert":
             for position in range(text2_start, text2_end):
                 if text2[position] in BIAODIAN:
-
                     if text1_start > 0:
                         biaodian_positions_2.append(position)
                         biaodian_positions_1.append(text1_start)
